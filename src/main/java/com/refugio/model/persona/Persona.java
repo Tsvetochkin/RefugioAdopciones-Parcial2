@@ -40,4 +40,9 @@ public abstract class Persona {
     public String getFechaNacimiento() {
         return fechaNacimiento;
     }
+
+    @Override
+    public String toString() {
+        return nombre;
+    }
 }

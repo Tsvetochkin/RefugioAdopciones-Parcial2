@@ -66,4 +66,9 @@ public abstract class Mascota {
     public abstract String getTipo();
 
     public abstract Adopcion<?> crearAdopcion(Empleado empleado, Adoptante adoptante);
+
+    @Override
+    public String toString() {
+        return nombre;
+    }
 }

@@ -1,6 +1,9 @@
 package com.refugio.ui;
 
+import com.refugio.dao.AdopcionDAO;
+import com.refugio.dao.AdoptanteDAO;
 import com.refugio.dao.EmpleadoDAO;
+import com.refugio.dao.MascotaDAO;
 import com.refugio.model.persona.Empleado;
 
 import javax.swing.*;
@@ -8,7 +11,10 @@ import java.awt.*;
 
 public class RegistroUI extends JFrame {
 
+    private final AdoptanteDAO adoptanteDAO;
     private final EmpleadoDAO empleadoDAO;
+    private final MascotaDAO mascotaDAO;
+    private final AdopcionDAO adopcionDAO;
 
     private JTextField nombreField;
     private JTextField edadField;
@@ -16,8 +22,11 @@ public class RegistroUI extends JFrame {
     private JTextField fechaNacimientoField;
     private JPasswordField passwordField;
 
-    public RegistroUI(EmpleadoDAO empleadoDAO) {
+    public RegistroUI(AdoptanteDAO adoptanteDAO, EmpleadoDAO empleadoDAO, MascotaDAO mascotaDAO, AdopcionDAO adopcionDAO) {
+        this.adoptanteDAO = adoptanteDAO;
         this.empleadoDAO = empleadoDAO;
+        this.mascotaDAO = mascotaDAO;
+        this.adopcionDAO = adopcionDAO;
 
         setTitle("Ingreso de Empleado");
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -85,11 +94,6 @@ public class RegistroUI extends JFrame {
 
     private void volverALogin() {
         dispose();
-        // This is problematic. We need all DAOs here.
-        // For now, let's assume we can't go back to a fully functional Login screen from here.
-        // This part of the UI flow might need a bigger refactor that is outside the scope of fixing task #4.
-        // The main goal is to remove Contenedor.
-        System.out.println("Returning to login... In a real app, we'd need to re-initialize the main UI context.");
-        // new LoginUI(????).setVisible(true);
+        new LoginUI(adoptanteDAO, empleadoDAO, mascotaDAO, adopcionDAO).setVisible(true);
     }
 }

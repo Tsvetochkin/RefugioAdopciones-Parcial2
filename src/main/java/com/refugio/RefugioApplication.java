@@ -4,6 +4,11 @@ import com.refugio.dao.AdopcionDAO;
 import com.refugio.dao.AdoptanteDAO;
 import com.refugio.dao.EmpleadoDAO;
 import com.refugio.dao.MascotaDAO;
+import com.refugio.model.mascota.*;
+import com.refugio.model.mascota.estado.EstadoEnObservacion;
+import com.refugio.model.mascota.estado.EstadoMascota;
+import com.refugio.model.mascota.estado.EstadoRequiereCuidados;
+import com.refugio.model.mascota.estado.EstadoSaludable;
 import com.refugio.model.persona.Adoptante;
 import com.refugio.model.persona.Empleado;
 import com.refugio.ui.LoginUI;
@@ -13,6 +18,9 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.builder.SpringApplicationBuilder;
 
+import java.util.Arrays;
+import java.util.List;
+import java.util.Random;
 import java.util.logging.Logger;
 
 @SpringBootApplication
@@ -52,9 +60,31 @@ public class RefugioApplication implements CommandLineRunner {
             logger.info("Adoptantes guardados en base de datos.");
         }
 
+        if (mascotaDAO.count() == 0) {
+            List<EstadoMascota> estados = Arrays.asList(
+                    new EstadoSaludable(),
+                    new EstadoRequiereCuidados(),
+                    new EstadoEnObservacion()
+            );
+
+            List<Mascota> mascotas = List.of(
+                    new Kanguro("Saltamontes", "2022-01-01", 200, getRandomEstado(estados)),
+                    new Cocodrilo("Bombardiro", "2021-03-14", 100, getRandomEstado(estados)),
+                    new Ornitorrinco("Narizon", "2023-05-01", 8, getRandomEstado(estados)),
+                    new Gato("Michi", "2020-10-10", 4.4, getRandomEstado(estados))
+            );
+            mascotaDAO.saveAll(mascotas);
+            logger.info("Mascotas guardadas en base de datos.");
+        }
+
+
         // Launch the UI
         java.awt.EventQueue.invokeLater(() ->
                 new LoginUI(adoptanteDAO, empleadoDAO, mascotaDAO, adopcionDAO).setVisible(true)
         );
+    }
+
+    private EstadoMascota getRandomEstado(List<EstadoMascota> estados) {
+        return estados.get(new Random().nextInt(estados.size()));
     }
 }

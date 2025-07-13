@@ -4,11 +4,19 @@ import com.refugio.model.excepciones.PesoExcesivoException;
 import com.refugio.model.mascota.Kanguro;
 import com.refugio.model.persona.Adoptante;
 import com.refugio.model.persona.Empleado;
+import jakarta.persistence.DiscriminatorValue;
+import jakarta.persistence.Entity;
 
+@Entity
+@DiscriminatorValue("Kanguro")
 public class AdopcionKanguro extends Adopcion<Kanguro> {
 
     public AdopcionKanguro(Kanguro mascota, Adoptante adoptante, Empleado empleado) {
         super(empleado, adoptante, mascota);
+    }
+
+    public AdopcionKanguro() {
+        super();
     }
 
     @Override

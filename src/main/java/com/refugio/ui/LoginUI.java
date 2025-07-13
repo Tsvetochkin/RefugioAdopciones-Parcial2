@@ -69,6 +69,6 @@ public class LoginUI extends JFrame {
 
     private void openRegistration() {
         dispose();
-        new RegistroUI(empleadoDAO).setVisible(true);
+        new RegistroUI(adoptanteDAO, empleadoDAO, mascotaDAO, adopcionDAO).setVisible(true);
     }
 }

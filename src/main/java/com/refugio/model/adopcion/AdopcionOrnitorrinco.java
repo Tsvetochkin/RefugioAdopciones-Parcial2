@@ -3,11 +3,19 @@ package com.refugio.model.adopcion;
 import com.refugio.model.mascota.Ornitorrinco;
 import com.refugio.model.persona.Adoptante;
 import com.refugio.model.persona.Empleado;
+import jakarta.persistence.DiscriminatorValue;
+import jakarta.persistence.Entity;
 
+@Entity
+@DiscriminatorValue("Ornitorrinco")
 public class AdopcionOrnitorrinco extends Adopcion<Ornitorrinco> {
 
     public AdopcionOrnitorrinco(Ornitorrinco mascota, Adoptante adoptante, Empleado empleado) {
         super(empleado, adoptante, mascota);
+    }
+
+    public AdopcionOrnitorrinco() {
+        super();
     }
 
     @Override
