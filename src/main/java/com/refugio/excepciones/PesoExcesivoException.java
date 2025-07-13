@@ -1,4 +1,4 @@
-package com.refugio.model.excepciones;
+package com.refugio.excepciones;
 
 public class PesoExcesivoException extends MascotaException {
     public PesoExcesivoException(String nombre, double peso) {

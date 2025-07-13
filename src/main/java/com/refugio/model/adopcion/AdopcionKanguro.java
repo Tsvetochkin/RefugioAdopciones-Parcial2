@@ -1,6 +1,6 @@
 package com.refugio.model.adopcion;
 
-import com.refugio.model.excepciones.PesoExcesivoException;
+import com.refugio.excepciones.PesoExcesivoException;
 import com.refugio.model.mascota.Kanguro;
 import com.refugio.model.persona.Adoptante;
 import com.refugio.model.persona.Empleado;

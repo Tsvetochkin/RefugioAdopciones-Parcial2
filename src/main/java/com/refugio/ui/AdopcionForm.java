@@ -50,7 +50,10 @@ public class AdopcionForm extends JFrame {
         JButton cancelarBtn = new JButton("Cancelar");
 
         adoptarBtn.addActionListener(e -> procesarAdopcion());
-        cancelarBtn.addActionListener(e -> dispose());
+        cancelarBtn.addActionListener(e -> {
+            dispose();
+            new LoginUI(adoptanteDAO, empleadoDAO, mascotaDAO, adopcionDAO).setVisible(true);
+        });
 
         panel.add(new JLabel("Adoptante:"));
         panel.add(comboAdoptante);
@@ -93,8 +96,12 @@ public class AdopcionForm extends JFrame {
             Adopcion<?> adopcion = AdopcionFactory.crearAdopcion(mascota, adoptante, empleado);
             adopcionDAO.save(adopcion);
 
+            System.out.println("Adopción registrada: " + mascota.getNombre() + " fue adoptado por " + adoptante.getNombre() + ".");
+            System.out.println("Recomendaciones de cuidado: " + mascota.getRecomendacionesCuidado());
             JOptionPane.showMessageDialog(this, "Adopción registrada exitosamente.");
+
             dispose();
+            new LoginUI(adoptanteDAO, empleadoDAO, mascotaDAO, adopcionDAO).setVisible(true);
         } catch (Exception e) {
             JOptionPane.showMessageDialog(this, "Error al registrar adopción: " + e.getMessage());
         }

@@ -10,4 +10,6 @@ import java.util.Optional;
 public interface EmpleadoDAO extends JpaRepository<Empleado, Long> {
 
     Optional<Empleado> findByNombre(String nombre);
+
+    Optional<Empleado> findByNombreAndPassword(String nombre, String password);
 }

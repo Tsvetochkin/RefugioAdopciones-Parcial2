@@ -56,9 +56,9 @@ public class LoginUI extends JFrame {
         String username = usernameField.getText();
         String password = new String(passwordField.getPassword());
 
-        Optional<Empleado> empleadoOptional = empleadoDAO.findByNombre(username);
+        Optional<Empleado> empleadoOptional = empleadoDAO.findByNombreAndPassword(username, password);
 
-        if (empleadoOptional.isPresent() && empleadoOptional.get().getPassword().equals(password)) {
+        if (empleadoOptional.isPresent()) {
             JOptionPane.showMessageDialog(this, "Login successful!");
             dispose();
             new AdopcionForm(adoptanteDAO, empleadoDAO, mascotaDAO, adopcionDAO).setVisible(true);
