@@ -4,13 +4,31 @@ import com.refugio.model.excepciones.MascotaException;
 import com.refugio.model.mascota.Mascota;
 import com.refugio.model.persona.Adoptante;
 import com.refugio.model.persona.Empleado;
+import jakarta.persistence.*;
 
 import java.time.LocalDate;
 
+@Entity
+@Inheritance(strategy = InheritanceType.SINGLE_TABLE)
+@DiscriminatorColumn(name = "tipo_adopcion", discriminatorType = DiscriminatorType.STRING)
 public abstract class Adopcion<T extends Mascota> {
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
+
+    @ManyToOne
+    @JoinColumn(name = "empleado_id")
     protected Empleado empleado;
+
+    @ManyToOne
+    @JoinColumn(name = "adoptante_id")
     protected Adoptante adoptante;
+
+    @ManyToOne(targetEntity = Mascota.class)
+    @JoinColumn(name = "mascota_id")
     protected T mascota;
+
     protected LocalDate fecha;
 
     public Adopcion(Empleado empleado, Adoptante adoptante, T mascota) {
@@ -18,6 +36,10 @@ public abstract class Adopcion<T extends Mascota> {
         this.adoptante = adoptante;
         this.mascota = mascota;
         this.fecha = LocalDate.now(); // автоматически устанавливаем дату
+    }
+
+    public Adopcion() {
+
     }
 
     public void procesarAdopcion() {

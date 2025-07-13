@@ -4,12 +4,23 @@ import com.refugio.model.adopcion.Adopcion;
 import com.refugio.model.mascota.estado.EstadoMascota;
 import com.refugio.model.persona.Adoptante;
 import com.refugio.model.persona.Empleado;
+import jakarta.persistence.*;
 
+@Entity
+@Inheritance(strategy = InheritanceType.SINGLE_TABLE)
+@DiscriminatorColumn(name = "tipo_mascota", discriminatorType = DiscriminatorType.STRING)
 public abstract class Mascota {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
+
     protected String nombre;
     protected String fechaNacimiento;
     protected double peso;
+
+    @Transient
     protected EstadoMascota estado;
+
     protected final String recomendacionesCuidado;
 
     public Mascota(String nombre, String fechaNacimiento, double peso, EstadoMascota estado) {
@@ -18,6 +29,10 @@ public abstract class Mascota {
         this.peso = peso;
         this.estado = estado;
         this.recomendacionesCuidado = estado.mostrarCuidados(); // фиксируем один раз
+    }
+
+    public Mascota() {
+        this.recomendacionesCuidado = "";
     }
 
     public String getNombre() {

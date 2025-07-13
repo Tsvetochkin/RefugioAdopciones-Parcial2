@@ -1,9 +1,11 @@
 package com.refugio.controller;
 
-import com.refugio.model.adopcion.Adopcion;
+import com.refugio.dao.AdoptanteDAO;
 import com.refugio.model.persona.Adoptante;
-import com.refugio.util.Contenedor;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
 
@@ -11,18 +13,15 @@ import java.util.List;
 @RequestMapping("/adoptantes")
 public class AdoptanteController {
 
-    private final Contenedor contenedor;
+    private final AdoptanteDAO adoptanteDAO;
 
-    public AdoptanteController() {
-        this.contenedor = Contenedor.getInstancia();
+    @Autowired
+    public AdoptanteController(AdoptanteDAO adoptanteDAO) {
+        this.adoptanteDAO = adoptanteDAO;
     }
 
     @GetMapping
     public List<Adoptante> obtenerTodos() {
-        return contenedor.getAdopciones()
-                .stream()
-                .map(Adopcion::getAdoptante)
-                .distinct()
-                .toList();
+        return adoptanteDAO.findAll();
     }
 }

@@ -1,28 +1,27 @@
 package com.refugio.controller;
 
-import com.refugio.model.adopcion.Adopcion;
+import com.refugio.dao.MascotaDAO;
 import com.refugio.model.mascota.Mascota;
-import com.refugio.util.Contenedor;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
-import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("/mascotas")
 public class MascotaController {
 
-    private final Contenedor contenedor;
+    private final MascotaDAO mascotaDAO;
 
-    public MascotaController() {
-        this.contenedor = Contenedor.getInstancia();
+    @Autowired
+    public MascotaController(MascotaDAO mascotaDAO) {
+        this.mascotaDAO = mascotaDAO;
     }
 
     @GetMapping
     public List<Mascota> obtenerTodas() {
-        return contenedor.getAdopciones()
-                .stream()
-                .map(Adopcion::getMascota)
-                .collect(Collectors.toList());
+        return mascotaDAO.findAll();
     }
 }
