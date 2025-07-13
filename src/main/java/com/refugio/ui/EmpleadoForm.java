@@ -1,6 +1,6 @@
 package com.refugio.ui;
 
-import com.refugio.RefugioApplication;
+import com.refugio.dao.EmpleadoDAO;
 import com.refugio.model.persona.Empleado;
 
 import javax.swing.*;
@@ -9,13 +9,15 @@ import java.time.LocalDate;
 
 public class EmpleadoForm extends JFrame {
 
+    private final EmpleadoDAO empleadoDAO;
     private JTextField nombreField;
     private JTextField edadField;
     private JTextField direccionField;
     private JTextField fechaNacimientoField;
     private JPasswordField passwordField;
 
-    public EmpleadoForm() {
+    public EmpleadoForm(EmpleadoDAO empleadoDAO) {
+        this.empleadoDAO = empleadoDAO;
         setTitle("Ingreso de Empleado");
         setSize(400, 300);
         setLocationRelativeTo(null);
@@ -32,7 +34,7 @@ public class EmpleadoForm extends JFrame {
 
         JLabel passwordLabel = new JLabel("Password:");
         passwordField = new JPasswordField();
-        
+
         JLabel edadLabel = new JLabel("Edad:");
         edadField = new JTextField();
 
@@ -78,7 +80,7 @@ public class EmpleadoForm extends JFrame {
             }
 
             Empleado empleado = new Empleado(nombre, edad, direccion, fechaNacimiento.toString(), password);
-            RefugioApplication.empleadoDAO.save(empleado);
+            empleadoDAO.save(empleado);
 
             JOptionPane.showMessageDialog(this, "Empleado guardado exitosamente.");
             dispose();

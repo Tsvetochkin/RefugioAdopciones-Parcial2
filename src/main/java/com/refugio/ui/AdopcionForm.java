@@ -1,11 +1,14 @@
 package com.refugio.ui;
 
+import com.refugio.dao.AdopcionDAO;
+import com.refugio.dao.AdoptanteDAO;
+import com.refugio.dao.EmpleadoDAO;
+import com.refugio.dao.MascotaDAO;
 import com.refugio.model.adopcion.Adopcion;
 import com.refugio.model.adopcion.AdopcionFactory;
 import com.refugio.model.persona.Adoptante;
 import com.refugio.model.persona.Empleado;
 import com.refugio.model.mascota.Mascota;
-import com.refugio.util.Contenedor;
 
 import javax.swing.*;
 import java.awt.*;
@@ -13,11 +16,21 @@ import java.util.List;
 
 public class AdopcionForm extends JFrame {
 
+    private final AdoptanteDAO adoptanteDAO;
+    private final EmpleadoDAO empleadoDAO;
+    private final MascotaDAO mascotaDAO;
+    private final AdopcionDAO adopcionDAO;
+
     private JComboBox<Adoptante> comboAdoptante;
     private JComboBox<Empleado> comboEmpleado;
     private JComboBox<Mascota> comboMascota;
 
-    public AdopcionForm() {
+    public AdopcionForm(AdoptanteDAO adoptanteDAO, EmpleadoDAO empleadoDAO, MascotaDAO mascotaDAO, AdopcionDAO adopcionDAO) {
+        this.adoptanteDAO = adoptanteDAO;
+        this.empleadoDAO = empleadoDAO;
+        this.mascotaDAO = mascotaDAO;
+        this.adopcionDAO = adopcionDAO;
+
         setTitle("Formulario de Adopción");
         setSize(450, 250);
         setLocationRelativeTo(null);
@@ -52,17 +65,17 @@ public class AdopcionForm extends JFrame {
     }
 
     private Adoptante[] getAdoptantes() {
-        List<Adoptante> lista = Contenedor.getInstancia().getAdoptantes();
+        List<Adoptante> lista = adoptanteDAO.findAll();
         return lista.toArray(new Adoptante[0]);
     }
 
     private Empleado[] getEmpleados() {
-        List<Empleado> lista = Contenedor.getInstancia().getEmpleados();
+        List<Empleado> lista = empleadoDAO.findAll();
         return lista.toArray(new Empleado[0]);
     }
 
     private Mascota[] getMascotas() {
-        List<Mascota> lista = Contenedor.getInstancia().getMascotas();
+        List<Mascota> lista = mascotaDAO.findAll();
         return lista.toArray(new Mascota[0]);
     }
 
@@ -78,7 +91,7 @@ public class AdopcionForm extends JFrame {
             }
 
             Adopcion<?> adopcion = AdopcionFactory.crearAdopcion(mascota, adoptante, empleado);
-            Contenedor.getInstancia().agregarAdopcion(adopcion);
+            adopcionDAO.save(adopcion);
 
             JOptionPane.showMessageDialog(this, "Adopción registrada exitosamente.");
             dispose();

@@ -1,6 +1,9 @@
 package com.refugio.ui;
 
-import com.refugio.RefugioApplication;
+import com.refugio.dao.AdopcionDAO;
+import com.refugio.dao.AdoptanteDAO;
+import com.refugio.dao.EmpleadoDAO;
+import com.refugio.dao.MascotaDAO;
 import com.refugio.model.persona.Empleado;
 
 import javax.swing.*;
@@ -9,10 +12,20 @@ import java.util.Optional;
 
 public class LoginUI extends JFrame {
 
+    private final AdoptanteDAO adoptanteDAO;
+    private final EmpleadoDAO empleadoDAO;
+    private final MascotaDAO mascotaDAO;
+    private final AdopcionDAO adopcionDAO;
+
     private JTextField usernameField;
     private JPasswordField passwordField;
 
-    public LoginUI() {
+    public LoginUI(AdoptanteDAO adoptanteDAO, EmpleadoDAO empleadoDAO, MascotaDAO mascotaDAO, AdopcionDAO adopcionDAO) {
+        this.adoptanteDAO = adoptanteDAO;
+        this.empleadoDAO = empleadoDAO;
+        this.mascotaDAO = mascotaDAO;
+        this.adopcionDAO = adopcionDAO;
+
         setTitle("Login");
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setSize(300, 150);
@@ -36,27 +49,26 @@ public class LoginUI extends JFrame {
         loginBtn.addActionListener(e -> login());
         registerBtn.addActionListener(e -> openRegistration());
 
-        setLocationRelativeTo(null); // Center the frame
+        setLocationRelativeTo(null);
     }
 
     private void login() {
         String username = usernameField.getText();
         String password = new String(passwordField.getPassword());
 
-        Optional<Empleado> empleadoOptional = RefugioApplication.empleadoDAO.findByNombre(username);
+        Optional<Empleado> empleadoOptional = empleadoDAO.findByNombre(username);
 
         if (empleadoOptional.isPresent() && empleadoOptional.get().getPassword().equals(password)) {
             JOptionPane.showMessageDialog(this, "Login successful!");
             dispose();
-            new AdopcionForm().setVisible(true);
+            new AdopcionForm(adoptanteDAO, empleadoDAO, mascotaDAO, adopcionDAO).setVisible(true);
         } else {
             JOptionPane.showMessageDialog(this, "Invalid username or password.", "Login Failed", JOptionPane.ERROR_MESSAGE);
         }
     }
 
     private void openRegistration() {
-        // Close the login window and open the registration window
         dispose();
-        new RegistroUI().setVisible(true);
+        new RegistroUI(empleadoDAO).setVisible(true);
     }
 }
