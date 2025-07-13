@@ -1,9 +1,9 @@
-package com.refugio.adopcion;
+package com.refugio.model.adopcion;
 
 import com.refugio.excepciones.MascotaException;
-import com.refugio.mascota.Mascota;
-import com.refugio.persona.Adoptante;
-import com.refugio.persona.Empleado;
+import com.refugio.model.mascota.Mascota;
+import com.refugio.model.persona.Adoptante;
+import com.refugio.model.persona.Empleado;
 
 import java.time.LocalDate;
 

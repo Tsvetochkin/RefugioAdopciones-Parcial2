@@ -1,7 +1,7 @@
 package com.refugio.controller;
 
-import com.refugio.adopcion.Adopcion;
-import com.refugio.persona.Adoptante;
+import com.refugio.model.adopcion.Adopcion;
+import com.refugio.model.persona.Adoptante;
 import com.refugio.util.Contenedor;
 import org.springframework.web.bind.annotation.*;
 

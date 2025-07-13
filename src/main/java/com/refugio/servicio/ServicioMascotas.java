@@ -1,8 +1,8 @@
 package com.refugio.servicio;
 
-import com.refugio.adopcion.Adopcion;
-import com.refugio.mascota.Mascota;
-import com.refugio.mascota.estado.EstadoRequiereCuidados;
+import com.refugio.model.adopcion.Adopcion;
+import com.refugio.model.mascota.Mascota;
+import com.refugio.model.mascota.estado.EstadoRequiereCuidados;
 
 import java.util.Comparator;
 import java.util.List;

@@ -1,10 +1,10 @@
-package com.refugio.mascota;
+package com.refugio.model.mascota;
 
-import com.refugio.adopcion.Adopcion;
-import com.refugio.adopcion.AdopcionOrnitorrinco;
-import com.refugio.mascota.estado.EstadoMascota;
-import com.refugio.persona.Adoptante;
-import com.refugio.persona.Empleado;
+import com.refugio.model.adopcion.Adopcion;
+import com.refugio.model.adopcion.AdopcionOrnitorrinco;
+import com.refugio.model.mascota.estado.EstadoMascota;
+import com.refugio.model.persona.Adoptante;
+import com.refugio.model.persona.Empleado;
 
 public class Ornitorrinco extends Mascota {
     public Ornitorrinco(String nombre, String fechaNacimiento, double peso, EstadoMascota estado) {

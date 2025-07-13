@@ -1,4 +1,4 @@
-package com.refugio.mascota.estado;
+package com.refugio.model.mascota.estado;
 
 public class EstadoSaludable implements EstadoMascota {
     @Override

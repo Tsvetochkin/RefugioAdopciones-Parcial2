@@ -1,8 +1,8 @@
-package com.refugio.adopcion;
+package com.refugio.model.adopcion;
 
-import com.refugio.mascota.*;
-import com.refugio.persona.Adoptante;
-import com.refugio.persona.Empleado;
+import com.refugio.model.mascota.*;
+import com.refugio.model.persona.Adoptante;
+import com.refugio.model.persona.Empleado;
 
 public class AdopcionFactory {
 

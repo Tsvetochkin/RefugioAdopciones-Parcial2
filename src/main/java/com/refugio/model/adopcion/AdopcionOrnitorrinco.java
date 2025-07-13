@@ -1,8 +1,8 @@
-package com.refugio.adopcion;
+package com.refugio.model.adopcion;
 
-import com.refugio.mascota.Ornitorrinco;
-import com.refugio.persona.Adoptante;
-import com.refugio.persona.Empleado;
+import com.refugio.model.mascota.Ornitorrinco;
+import com.refugio.model.persona.Adoptante;
+import com.refugio.model.persona.Empleado;
 
 public class AdopcionOrnitorrinco extends Adopcion<Ornitorrinco> {
 

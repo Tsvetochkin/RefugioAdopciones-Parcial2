@@ -1,13 +1,16 @@
 package com.refugio;
 
-import com.refugio.adopcion.Adopcion;
+import com.refugio.model.adopcion.Adopcion;
 import com.refugio.dao.AdoptanteDAO;
 import com.refugio.dao.EmpleadoDAO;
 import com.refugio.excepciones.MascotaException;
-import com.refugio.mascota.*;
-import com.refugio.mascota.estado.*;
-import com.refugio.persona.Adoptante;
-import com.refugio.persona.Empleado;
+import com.refugio.model.mascota.*;
+import com.refugio.model.mascota.estado.EstadoEnObservacion;
+import com.refugio.model.mascota.estado.EstadoMascota;
+import com.refugio.model.mascota.estado.EstadoRequiereCuidados;
+import com.refugio.model.mascota.estado.EstadoSaludable;
+import com.refugio.model.persona.Adoptante;
+import com.refugio.model.persona.Empleado;
 import com.refugio.ticket.Ticket;
 import com.refugio.ui.LoginUI;
 import com.refugio.util.Contenedor;

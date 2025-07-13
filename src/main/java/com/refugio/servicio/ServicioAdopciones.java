@@ -1,7 +1,7 @@
 package com.refugio.servicio;
 
-import com.refugio.adopcion.Adopcion;
-import com.refugio.mascota.Mascota;
+import com.refugio.model.adopcion.Adopcion;
+import com.refugio.model.mascota.Mascota;
 
 import java.util.ArrayList;
 import java.util.List;

@@ -1,4 +1,4 @@
-package com.refugio.mascota.estado;
+package com.refugio.model.mascota.estado;
 
 import com.refugio.email.EmailSender;
 import com.refugio.email.EmailSenderI;

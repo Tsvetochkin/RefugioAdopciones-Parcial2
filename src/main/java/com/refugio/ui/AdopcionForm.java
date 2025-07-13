@@ -1,10 +1,10 @@
 package com.refugio.ui;
 
-import com.refugio.adopcion.Adopcion;
-import com.refugio.adopcion.AdopcionFactory;
-import com.refugio.persona.Adoptante;
-import com.refugio.persona.Empleado;
-import com.refugio.mascota.Mascota;
+import com.refugio.model.adopcion.Adopcion;
+import com.refugio.model.adopcion.AdopcionFactory;
+import com.refugio.model.persona.Adoptante;
+import com.refugio.model.persona.Empleado;
+import com.refugio.model.mascota.Mascota;
 import com.refugio.util.Contenedor;
 
 import javax.swing.*;

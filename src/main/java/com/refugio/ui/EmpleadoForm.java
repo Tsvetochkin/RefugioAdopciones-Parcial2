@@ -1,6 +1,6 @@
 package com.refugio.ui;
 
-import com.refugio.persona.Empleado;
+import com.refugio.model.persona.Empleado;
 import com.refugio.util.Contenedor;
 
 import javax.swing.*;

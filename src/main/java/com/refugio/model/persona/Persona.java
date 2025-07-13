@@ -1,4 +1,4 @@
-package com.refugio.persona;
+package com.refugio.model.persona;
 import jakarta.persistence.MappedSuperclass;
 import jakarta.persistence.Id;
 import jakarta.persistence.GeneratedValue;
