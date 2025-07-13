@@ -1,87 +1,62 @@
 package com.refugio.ui;
 
+import com.refugio.RefugioApplication;
+import com.refugio.model.persona.Empleado;
+
 import javax.swing.*;
 import java.awt.*;
-// Предполагается, что у вас будет такой сервисный класс для управления логикой
-// import com.refugio.servicio.EmpleadoService;
+import java.util.Optional;
 
 public class LoginUI extends JFrame {
 
-    // Класс теперь зависит от интерфейса сервиса, а не от конкретной реализации DAO
-    // private final EmpleadoService empleadoService;
+    private JTextField usernameField;
+    private JPasswordField passwordField;
 
-    private JTextField nombreField;
-    private JTextField edadField;
-    private JTextField direccionField;
-    private JTextField fechaNacimientoField;
-
-    // Сервис должен передаваться в конструктор (Dependency Injection)
-    public LoginUI(/*EmpleadoService empleadoService*/) {
-        // this.empleadoService = empleadoService;
-
-        setTitle("Ingreso de Empleado");
+    public LoginUI() {
+        setTitle("Login");
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        setSize(400, 250);
-        setLayout(new GridLayout(5, 2, 10, 10)); // Добавлены отступы для красоты
+        setSize(300, 150);
+        setLayout(new GridLayout(3, 2, 10, 10));
         ((JPanel)getContentPane()).setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
 
+        add(new JLabel("Username:"));
+        usernameField = new JTextField();
+        add(usernameField);
 
-        add(new JLabel("Nombre:"));
-        nombreField = new JTextField();
-        add(nombreField);
+        add(new JLabel("Password:"));
+        passwordField = new JPasswordField();
+        add(passwordField);
 
-        add(new JLabel("Edad:"));
-        edadField = new JTextField();
-        add(edadField);
+        JButton loginBtn = new JButton("Login");
+        add(loginBtn);
 
-        add(new JLabel("Dirección:"));
-        direccionField = new JTextField();
-        add(direccionField);
+        JButton registerBtn = new JButton("Register");
+        add(registerBtn);
 
-        add(new JLabel("Fecha Nacimiento (yyyy-MM-dd):"));
-        fechaNacimientoField = new JTextField();
-        add(fechaNacimientoField);
+        loginBtn.addActionListener(e -> login());
+        registerBtn.addActionListener(e -> openRegistration());
 
-        JButton guardarBtn = new JButton("Guardar");
-        add(guardarBtn);
-
-        JButton cancelarBtn = new JButton("Cancelar");
-        add(cancelarBtn);
-
-        guardarBtn.addActionListener(e -> guardarEmpleado());
-        cancelarBtn.addActionListener(e -> System.exit(0));
-
-        // Раскомментируйте setVisible(true) в том месте, где вы создаете этот UI.
-        // setVisible(true);
+        setLocationRelativeTo(null); // Center the frame
     }
 
-    private void guardarEmpleado() {
-        try {
-            String nombre = nombreField.getText();
-            if (nombre.trim().isEmpty()) {
-                JOptionPane.showMessageDialog(this, "El nombre no puede estar vacío.", "Error de validación", JOptionPane.ERROR_MESSAGE);
-                return;
-            }
-            int edad = Integer.parseInt(edadField.getText());
-            String direccion = direccionField.getText();
-            String fechaNacimiento = fechaNacimientoField.getText();
+    private void login() {
+        String username = usernameField.getText();
+        String password = new String(passwordField.getPassword());
 
-            // Вся логика сохранения теперь уходит в сервисный слой.
-            // UI просто передает данные.
-            // empleadoService.guardarNuevoEmpleado(nombre, edad, direccion, fechaNacimiento);
+        Optional<Empleado> empleadoOptional = RefugioApplication.empleadoDAO.findByNombre(username);
 
-            // Так как сервиса пока нет, для демонстрации выведем сообщение
-            System.out.println("UI вызвал бы сервис для сохранения: " + nombre);
-
-
-            JOptionPane.showMessageDialog(this, "Empleado '" + nombre + "' guardado exitosamente.");
-            dispose(); // закрыть окно после сохранения
-
-        } catch (NumberFormatException ex) {
-            JOptionPane.showMessageDialog(this, "La edad debe ser un número válido.", "Error de formato", JOptionPane.ERROR_MESSAGE);
-        } catch (Exception ex) {
-            // Здесь будут перехватываться ошибки из сервисного слоя
-            JOptionPane.showMessageDialog(this, "Error al guardar empleado: " + ex.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+        if (empleadoOptional.isPresent() && empleadoOptional.get().getPassword().equals(password)) {
+            JOptionPane.showMessageDialog(this, "Login successful!");
+            dispose();
+            new AdopcionForm().setVisible(true);
+        } else {
+            JOptionPane.showMessageDialog(this, "Invalid username or password.", "Login Failed", JOptionPane.ERROR_MESSAGE);
         }
+    }
+
+    private void openRegistration() {
+        // Close the login window and open the registration window
+        dispose();
+        new RegistroUI().setVisible(true);
     }
 }

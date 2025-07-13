@@ -1,7 +1,7 @@
 package com.refugio.ui;
 
+import com.refugio.RefugioApplication;
 import com.refugio.model.persona.Empleado;
-import com.refugio.util.Contenedor;
 
 import javax.swing.*;
 import java.awt.*;
@@ -13,22 +13,26 @@ public class EmpleadoForm extends JFrame {
     private JTextField edadField;
     private JTextField direccionField;
     private JTextField fechaNacimientoField;
+    private JPasswordField passwordField;
 
     public EmpleadoForm() {
         setTitle("Ingreso de Empleado");
-        setSize(400, 250);
+        setSize(400, 300);
         setLocationRelativeTo(null);
         setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         initUI();
     }
 
     private void initUI() {
-        JPanel panel = new JPanel(new GridLayout(5, 2, 10, 10));
+        JPanel panel = new JPanel(new GridLayout(6, 2, 10, 10));
         panel.setBorder(BorderFactory.createEmptyBorder(15, 15, 15, 15));
 
         JLabel nombreLabel = new JLabel("Nombre:");
         nombreField = new JTextField();
 
+        JLabel passwordLabel = new JLabel("Password:");
+        passwordField = new JPasswordField();
+        
         JLabel edadLabel = new JLabel("Edad:");
         edadField = new JTextField();
 
@@ -46,6 +50,8 @@ public class EmpleadoForm extends JFrame {
 
         panel.add(nombreLabel);
         panel.add(nombreField);
+        panel.add(passwordLabel);
+        panel.add(passwordField);
         panel.add(edadLabel);
         panel.add(edadField);
         panel.add(direccionLabel);
@@ -61,13 +67,18 @@ public class EmpleadoForm extends JFrame {
     private void guardarEmpleado() {
         try {
             String nombre = nombreField.getText();
+            String password = new String(passwordField.getPassword());
             int edad = Integer.parseInt(edadField.getText());
             String direccion = direccionField.getText();
             LocalDate fechaNacimiento = LocalDate.parse(fechaNacimientoField.getText());
 
-            Empleado empleado = Empleado.getInstancia(nombre, edad, direccion, fechaNacimiento.toString());
+            if (nombre.trim().isEmpty() || password.trim().isEmpty()) {
+                JOptionPane.showMessageDialog(this, "El nombre y la contraseña no pueden estar vacíos.", "Error de validación", JOptionPane.ERROR_MESSAGE);
+                return;
+            }
 
-            Contenedor.getInstancia().agregarEmpleado(empleado);
+            Empleado empleado = new Empleado(nombre, edad, direccion, fechaNacimiento.toString(), password);
+            RefugioApplication.empleadoDAO.save(empleado);
 
             JOptionPane.showMessageDialog(this, "Empleado guardado exitosamente.");
             dispose();

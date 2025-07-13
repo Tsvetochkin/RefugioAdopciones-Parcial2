@@ -25,8 +25,10 @@ import java.util.logging.Logger;
 @SpringBootApplication
 public class RefugioApplication implements CommandLineRunner {
 
+	public static EmpleadoDAO empleadoDAO;
+
 	@Autowired
-	private EmpleadoDAO empleadoDAO;
+	private EmpleadoDAO empleadoDAOInstance;
 
 	@Autowired
 	private AdoptanteDAO adoptanteDAO;
@@ -41,7 +43,8 @@ public class RefugioApplication implements CommandLineRunner {
 
 	@Override
 	public void run(String... args) {
-		Empleado empleado = Empleado.getInstancia("Noe", 33, "Casa Rosada", "1989-06-15");
+	    empleadoDAO = this.empleadoDAOInstance;
+		Empleado empleado = new Empleado("Noe", 33, "Casa Rosada", "1989-06-15", "password");
 		empleadoDAO.save(empleado);
 		logger.info("Empleado guardado en base de datos: " + empleado.getNombre());
 

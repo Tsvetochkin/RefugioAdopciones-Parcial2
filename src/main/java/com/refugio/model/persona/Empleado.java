@@ -1,23 +1,25 @@
 package com.refugio.model.persona;
 import jakarta.persistence.Entity;
 
-// Singleton para representar al único empleado del refugio
 @Entity
 public class Empleado extends Persona {
-    private static Empleado instancia;
+    
+    private String password;
 
     public Empleado() {
         super();
     }
 
-    public Empleado(String nombre, int edad, String direccion, String fechaNacimiento) {
+    public Empleado(String nombre, int edad, String direccion, String fechaNacimiento, String password) {
         super(nombre, edad, direccion, fechaNacimiento);
+        this.password = password;
     }
 
-    public static Empleado getInstancia(String nombre, int edad, String direccion, String fechaNacimiento) {
-        if (instancia == null) {
-            instancia = new Empleado(nombre, edad, direccion, fechaNacimiento);
-        }
-        return instancia;
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
     }
 }

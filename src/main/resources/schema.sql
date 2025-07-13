@@ -6,7 +6,8 @@ CREATE TABLE empleado (
                           nombre VARCHAR(255),
                           edad INT,
                           direccion VARCHAR(255),
-                          fecha_nacimiento VARCHAR(255)
+                          fecha_nacimiento VARCHAR(255),
+                          password VARCHAR(255)
 );
 
 CREATE TABLE adoptante (
