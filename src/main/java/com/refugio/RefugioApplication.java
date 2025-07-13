@@ -39,14 +39,15 @@ public class RefugioApplication implements CommandLineRunner {
 	@Override
 	public void run(String... args) {
 		Empleado empleado = Empleado.getInstancia("Noe", 33, "Casa Rosada", "1989-06-15");
-		empleadoDAO.guardar(empleado);
+		empleadoDAO.save(empleado);
 		logger.info("Empleado guardado en base de datos: " + empleado.getNombre());
+
 
 		Adoptante adoptante1 = new Adoptante("Adam", 28, "Palermo Alto 55", "1995-01-01");
 		Adoptante adoptante2 = new Adoptante("Eva", 31, "Belgrano R", "1992-03-20");
 
-		adoptanteDAO.guardar(adoptante1);
-		adoptanteDAO.guardar(adoptante2);
+		adoptanteDAO.save(adoptante1);
+		adoptanteDAO.save(adoptante2);
 		logger.info("Adoptantes guardados en base de datos.");
 
 		List<EstadoMascota> estados = Arrays.asList(
