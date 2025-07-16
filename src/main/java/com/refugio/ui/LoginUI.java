@@ -64,7 +64,7 @@ public class LoginUI extends JFrame {
             SessionManager.getInstance().login(empleado);
             JOptionPane.showMessageDialog(this, "Login successful!");
             dispose();
-            new AdopcionForm(adoptanteDAO, empleadoDAO, mascotaDAO, adopcionDAO).setVisible(true);
+            new AdopcionesUI(adopcionDAO, adoptanteDAO, empleadoDAO, mascotaDAO).setVisible(true);
         } else {
             JOptionPane.showMessageDialog(this, "Invalid username or password.", "Login Failed", JOptionPane.ERROR_MESSAGE);
         }

@@ -29,13 +29,13 @@ public abstract class Adopcion<T extends Mascota> {
     @JoinColumn(name = "mascota_id")
     protected T mascota;
 
-    protected LocalDate fecha;
+    protected LocalDate fechaAdopcion;
 
     public Adopcion(Empleado empleado, Adoptante adoptante, T mascota) {
         this.empleado = empleado;
         this.adoptante = adoptante;
         this.mascota = mascota;
-        this.fecha = LocalDate.now(); // автоматически устанавливаем дату
+        this.fechaAdopcion = LocalDate.now(); // автоматически устанавливаем дату
     }
 
     public Adopcion() {
@@ -68,19 +68,39 @@ public abstract class Adopcion<T extends Mascota> {
 
     protected abstract void realizarPasoEspecifico() throws MascotaException;
 
+    public Long getId() {
+        return id;
+    }
+
     public Empleado getEmpleado() {
         return empleado;
+    }
+
+    public void setEmpleado(Empleado empleado) {
+        this.empleado = empleado;
     }
 
     public Adoptante getAdoptante() {
         return adoptante;
     }
 
+    public void setAdoptante(Adoptante adoptante) {
+        this.adoptante = adoptante;
+    }
+
     public T getMascota() {
         return mascota;
     }
 
-    public LocalDate getFecha() {
-        return fecha;
+    public void setMascota(T mascota) {
+        this.mascota = mascota;
+    }
+
+    public LocalDate getFechaAdopcion() {
+        return fechaAdopcion;
+    }
+
+    public void setFechaAdopcion(LocalDate fechaAdopcion) {
+        this.fechaAdopcion = fechaAdopcion;
     }
 }
