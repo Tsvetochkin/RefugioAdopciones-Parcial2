@@ -25,7 +25,7 @@ public abstract class Adopcion<T extends Mascota> {
     @JoinColumn(name = "adoptante_id")
     protected Adoptante adoptante;
 
-    @ManyToOne(targetEntity = Mascota.class)
+    @OneToOne(targetEntity = Mascota.class)
     @JoinColumn(name = "mascota_id")
     protected T mascota;
 

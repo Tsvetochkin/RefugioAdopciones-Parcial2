@@ -23,6 +23,9 @@ public abstract class Mascota {
 
     protected final String recomendacionesCuidado;
 
+    @OneToOne(mappedBy = "mascota", cascade = CascadeType.ALL, orphanRemoval = true)
+    private Adopcion adopcion;
+
     public Mascota(String nombre, String fechaNacimiento, double peso, EstadoMascota estado) {
         this.nombre = nombre;
         this.fechaNacimiento = fechaNacimiento;
@@ -66,6 +69,14 @@ public abstract class Mascota {
     public abstract String getTipo();
 
     public abstract Adopcion<?> crearAdopcion(Empleado empleado, Adoptante adoptante);
+
+    public Adopcion getAdopcion() {
+        return adopcion;
+    }
+
+    public void setAdopcion(Adopcion adopcion) {
+        this.adopcion = adopcion;
+    }
 
     @Override
     public String toString() {
