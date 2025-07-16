@@ -1,24 +1,37 @@
 package com.refugio.servicio;
 
+import com.refugio.dao.AdopcionDAO;
 import com.refugio.model.adopcion.Adopcion;
-import com.refugio.model.mascota.Mascota;
+import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
 import java.util.List;
 
+@Service
 public class ServicioAdopciones {
 
-    private List<Adopcion<? extends Mascota>> adopciones = new ArrayList<>();
+    private final AdopcionDAO adopcionDAO;
 
-    public void registrar(Adopcion<? extends Mascota> adopcion) {
-        adopciones.add(adopcion);
+    public ServicioAdopciones(AdopcionDAO adopcionDAO) {
+        this.adopcionDAO = adopcionDAO;
     }
 
-    public List<Adopcion<? extends Mascota>> obtenerTodas() {
-        return adopciones;
+    public void registrar(Adopcion adopcion) {
+        adopcionDAO.save(adopcion);
+    }
+
+    public List<Adopcion> obtenerTodas() {
+        return adopcionDAO.findAll();
+    }
+
+    public void actualizar(Adopcion adopcion) {
+        adopcionDAO.save(adopcion);
+    }
+
+    public void eliminar(Long id) {
+        adopcionDAO.deleteById(id);
     }
 
     public boolean existeAdopcionSinMascota() {
-        return adopciones.stream().anyMatch(a -> a.getMascota() == null);
+        return adopcionDAO.findAll().stream().anyMatch(a -> a.getMascota() == null);
     }
 }
