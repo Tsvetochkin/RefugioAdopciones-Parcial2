@@ -5,6 +5,7 @@ import com.refugio.dao.AdoptanteDAO;
 import com.refugio.dao.EmpleadoDAO;
 import com.refugio.dao.MascotaDAO;
 import com.refugio.model.persona.Empleado;
+import com.refugio.servicio.SessionManager;
 
 import javax.swing.*;
 import java.awt.*;
@@ -59,6 +60,8 @@ public class LoginUI extends JFrame {
         Optional<Empleado> empleadoOptional = empleadoDAO.findByNombreAndPassword(username, password);
 
         if (empleadoOptional.isPresent()) {
+            Empleado empleado = empleadoOptional.get();
+            SessionManager.getInstance().login(empleado);
             JOptionPane.showMessageDialog(this, "Login successful!");
             dispose();
             new AdopcionForm(adoptanteDAO, empleadoDAO, mascotaDAO, adopcionDAO).setVisible(true);

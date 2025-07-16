@@ -1,7 +1,7 @@
+DROP TABLE IF EXISTS adopcion;
 DROP TABLE IF EXISTS empleado;
 DROP TABLE IF EXISTS adoptante;
 DROP TABLE IF EXISTS mascota;
-DROP TABLE IF EXISTS adopcion;
 
 CREATE TABLE empleado (
                           id BIGINT AUTO_INCREMENT PRIMARY KEY,

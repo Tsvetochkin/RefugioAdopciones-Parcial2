@@ -9,6 +9,7 @@ import com.refugio.model.adopcion.AdopcionFactory;
 import com.refugio.model.persona.Adoptante;
 import com.refugio.model.persona.Empleado;
 import com.refugio.model.mascota.Mascota;
+import com.refugio.servicio.SessionManager;
 
 import javax.swing.*;
 import java.awt.*;
@@ -22,7 +23,6 @@ public class AdopcionForm extends JFrame {
     private final AdopcionDAO adopcionDAO;
 
     private JComboBox<Adoptante> comboAdoptante;
-    private JComboBox<Empleado> comboEmpleado;
     private JComboBox<Mascota> comboMascota;
 
     public AdopcionForm(AdoptanteDAO adoptanteDAO, EmpleadoDAO empleadoDAO, MascotaDAO mascotaDAO, AdopcionDAO adopcionDAO) {
@@ -32,18 +32,17 @@ public class AdopcionForm extends JFrame {
         this.adopcionDAO = adopcionDAO;
 
         setTitle("Formulario de Adopción");
-        setSize(450, 250);
+        setSize(450, 200);
         setLocationRelativeTo(null);
         setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         initUI();
     }
 
     private void initUI() {
-        JPanel panel = new JPanel(new GridLayout(4, 2, 10, 10));
+        JPanel panel = new JPanel(new GridLayout(3, 2, 10, 10));
         panel.setBorder(BorderFactory.createEmptyBorder(15, 15, 15, 15));
 
         comboAdoptante = new JComboBox<>(getAdoptantes());
-        comboEmpleado = new JComboBox<>(getEmpleados());
         comboMascota = new JComboBox<>(getMascotas());
 
         JButton adoptarBtn = new JButton("Adoptar");
@@ -57,8 +56,6 @@ public class AdopcionForm extends JFrame {
 
         panel.add(new JLabel("Adoptante:"));
         panel.add(comboAdoptante);
-        panel.add(new JLabel("Empleado:"));
-        panel.add(comboEmpleado);
         panel.add(new JLabel("Mascota:"));
         panel.add(comboMascota);
         panel.add(adoptarBtn);
@@ -72,11 +69,6 @@ public class AdopcionForm extends JFrame {
         return lista.toArray(new Adoptante[0]);
     }
 
-    private Empleado[] getEmpleados() {
-        List<Empleado> lista = empleadoDAO.findAll();
-        return lista.toArray(new Empleado[0]);
-    }
-
     private Mascota[] getMascotas() {
         List<Mascota> lista = mascotaDAO.findAll();
         return lista.toArray(new Mascota[0]);
@@ -85,8 +77,8 @@ public class AdopcionForm extends JFrame {
     private void procesarAdopcion() {
         try {
             Adoptante adoptante = (Adoptante) comboAdoptante.getSelectedItem();
-            Empleado empleado = (Empleado) comboEmpleado.getSelectedItem();
             Mascota mascota = (Mascota) comboMascota.getSelectedItem();
+            Empleado empleado = SessionManager.getInstance().getLoggedInEmpleado();
 
             if (adoptante == null || empleado == null || mascota == null) {
                 JOptionPane.showMessageDialog(this, "Debe seleccionar todas las opciones.");
