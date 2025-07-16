@@ -25,7 +25,7 @@ public abstract class Adopcion<T extends Mascota> {
     @JoinColumn(name = "adoptante_id")
     protected Adoptante adoptante;
 
-    @OneToOne(targetEntity = Mascota.class)
+    @OneToOne(targetEntity = Mascota.class, orphanRemoval = true)
     @JoinColumn(name = "mascota_id")
     protected T mascota;
 
@@ -55,11 +55,11 @@ public abstract class Adopcion<T extends Mascota> {
     }
 
     private void registrarAdoptante() {
-        System.out.println("Registrando datos del adoptante...");
+        System.out.println("Registrando данных del adoptante...");
     }
 
     private void registrarEmpleado() {
-        System.out.println("Registrando datos del empleado encargado...");
+        System.out.println("Registrando данных del empleado encargado...");
     }
 
     private void registrarMascota() {

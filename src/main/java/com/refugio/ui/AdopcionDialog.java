@@ -5,7 +5,6 @@ import com.refugio.dao.AdoptanteDAO;
 import com.refugio.dao.EmpleadoDAO;
 import com.refugio.dao.MascotaDAO;
 import com.refugio.model.adopcion.Adopcion;
-import com.refugio.model.adopcion.AdopcionFactory;
 import com.refugio.model.mascota.Mascota;
 import com.refugio.model.persona.Adoptante;
 import com.refugio.model.persona.Empleado;
@@ -21,7 +20,7 @@ public class AdopcionDialog extends JDialog {
     private final AdoptanteDAO adoptanteDAO;
     private final EmpleadoDAO empleadoDAO;
     private final MascotaDAO mascotaDAO;
-    private final Adopcion adopcion;
+    private Adopcion adopcion;
 
     private JComboBox<Adoptante> comboAdoptante;
     private JComboBox<Mascota> comboMascota;
@@ -83,30 +82,40 @@ public class AdopcionDialog extends JDialog {
 
     private void saveAdopcion() {
         try {
-            Adoptante adoptante = (Adoptante) comboAdoptante.getSelectedItem();
-            Mascota mascota = (Mascota) comboMascota.getSelectedItem();
-            Empleado empleado = SessionManager.getInstance().getLoggedInEmpleado();
+            Adoptante selectedAdoptante = (Adoptante) comboAdoptante.getSelectedItem();
+            Mascota selectedMascota = (Mascota) comboMascota.getSelectedItem();
+            Empleado loggedInEmpleado = SessionManager.getInstance().getLoggedInEmpleado();
 
-            if (adoptante == null || empleado == null || mascota == null) {
+            if (selectedAdoptante == null || loggedInEmpleado == null || selectedMascota == null) {
                 JOptionPane.showMessageDialog(this, "Debe seleccionar todas las opciones.");
                 return;
             }
 
+            // Fetch managed entities
+            Adoptante adoptante = adoptanteDAO.findById(selectedAdoptante.getId()).orElse(null);
+            Mascota mascota = mascotaDAO.findById(selectedMascota.getId()).orElse(null);
+            Empleado empleado = empleadoDAO.findById(loggedInEmpleado.getId()).orElse(null);
+
+            if (adoptante == null || mascota == null || empleado == null) {
+                JOptionPane.showMessageDialog(this, "Error al recuperar datos de la base de datos.");
+                return;
+            }
+
             if (this.adopcion == null) {
-                Adopcion<?> nuevaAdopcion = AdopcionFactory.crearAdopcion(mascota, adoptante, empleado);
-                adopcionDAO.save(nuevaAdopcion);
-                JOptionPane.showMessageDialog(this, "Adopción registrada exitosamente.");
+                this.adopcion = mascota.crearAdopcion(empleado, adoptante);
             } else {
                 this.adopcion.setAdoptante(adoptante);
                 this.adopcion.setMascota(mascota);
                 this.adopcion.setEmpleado(empleado);
-                adopcionDAO.save(this.adopcion);
-                JOptionPane.showMessageDialog(this, "Adopción actualizada exitosamente.");
             }
+            
+            adopcionDAO.save(this.adopcion);
+            JOptionPane.showMessageDialog(this, "Adopción guardada exitosamente.");
 
             dispose();
         } catch (Exception e) {
             JOptionPane.showMessageDialog(this, "Error al guardar adopción: " + e.getMessage());
+            e.printStackTrace();
         }
     }
 }

@@ -19,7 +19,7 @@ public class Ticket {
         Empleado empleado = adopcion.getEmpleado();
         Adoptante adoptante = adopcion.getAdoptante();
         Mascota mascota = adopcion.getMascota();
-        LocalDate fecha = adopcion.getFecha();
+        LocalDate fecha = adopcion.getFechaAdopcion();
 
         System.out.println("--------------------------------------------------");
         System.out.println("              TICKET DE ADOPCIÓN");

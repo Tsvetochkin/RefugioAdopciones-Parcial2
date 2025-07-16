@@ -111,7 +111,7 @@ public class AdopcionesUI extends JFrame {
             Long adopcionId = (Long) tableModel.getValueAt(selectedRow, 0);
             int confirm = JOptionPane.showConfirmDialog(this, "¿Está seguro de eliminar esta adopción?", "Confirmar", JOptionPane.YES_NO_OPTION);
             if (confirm == JOptionPane.YES_OPTION) {
-                adopcionDAO.deleteById(adopcionId);
+                adopcionDAO.findById(adopcionId).ifPresent(adopcionDAO::delete);
                 loadAdopciones();
             }
         } else {

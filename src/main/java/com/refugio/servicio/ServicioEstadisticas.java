@@ -67,7 +67,7 @@ public class ServicioEstadisticas {
     public List<Adopcion<? extends Mascota>> filtrarAdopcionesRecientes() {
         LocalDate hoy = LocalDate.now();
         return adopciones.stream()
-                .filter(a -> a.getFecha().isAfter(hoy.minusDays(30)))
+                .filter(a -> a.getFechaAdopcion().isAfter(hoy.minusDays(30)))
                 .collect(Collectors.toList());
     }
 

@@ -24,6 +24,9 @@ public abstract class Persona {
         this.direccion = direccion;
         this.fechaNacimiento = fechaNacimiento;
     }
+    public Long getId() {
+        return id;
+    }
 
     public String getNombre() {
         return nombre;
